@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% from 'bootstrap/nav.html' import render_breadcrumb_item %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Главная панель. Dashboard{% endblock %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('admin.index') }}">
-                <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Vshaurme"> Vshaurme Dashboard
+                <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Vshaurme">Главная панель Vshaurme Dashboard
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                     aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,16 +16,16 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <div class="navbar-nav ml-auto">
-                    {{ render_nav_item('main.index', 'Return Vsharume') }}
+                    {{ render_nav_item('main.index', 'Вернуться на главную. Return Vsharume') }}
                     <div class="dropdown nav-item">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">Manage<span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
-                            <a class="dropdown-item" href="{{ url_for('admin.manage_photo') }}">Photos</a>
-                            <a class="dropdown-item" href="{{ url_for('admin.manage_user') }}">Users</a>
-                            <a class="dropdown-item" href="{{ url_for('admin.manage_tag') }}">Tags</a>
-                            <a class="dropdown-item" href="{{ url_for('admin.manage_comment') }}">Comments</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.manage_photo') }}">Фото. Photos</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.manage_user') }}">Пользователи. Users</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.manage_tag') }}">Теги. Tags</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.manage_comment') }}">Комментарии. Comments</a>
                         </div>
                     </div>
                     <div class="dropdown nav-item">
@@ -36,16 +36,16 @@
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
-                            <h6 class="dropdown-header">Logged in as {{ current_user.username }}</h6>
+                            <h6 class="dropdown-header">Вошел как .Logged in as {{ current_user.username }}</h6>
                             <a class="dropdown-item" href="{{ url_for('user.index', username=current_user.username) }}">
-                                <span class="oi oi-person"></span> My Home
+                                <span class="oi oi-person"></span> Домашняя страница. My Home
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url_for('user.edit_profile') }}">
-                                <span class="oi oi-cog"></span> Settings
+                                <span class="oi oi-cog"></span> Настройки. Settings
                             </a>
                             <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
-                                <span class="oi oi-power-standby"></span> Logout
+                                <span class="oi oi-power-standby"></span> Выход. Logout
                             </a>
                         </div>
                     </div>
@@ -58,31 +58,31 @@
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            {{ render_breadcrumb_item('admin.index', 'Dashboard Home') }}
+            {{ render_breadcrumb_item('admin.index', 'Домашняя панель. Dashboard Home') }}
         </ol>
     </nav>
     <div class="row">
         <div class="col-md-6">
             <div class="card border-primary mb-3">
-                <div class="card-header"><span class="oi oi-image"></span> Photos</div>
+                <div class="card-header"><span class="oi oi-image"></span> Фото. Photos</div>
                 <div class="card-body">
-                    <h4 class="card-title">Total: {{ photo_count|default('0') }}</h4>
-                    <p class="card-text">Reported: {{ reported_photo_count|default('0') }}</p>
-                    <a class="btn btn-primary text-white" href="{{ url_for('.manage_photo') }}">Manage</a>
+                    <h4 class="card-title">Всего. Total: {{ photo_count|default('0') }}</h4>
+                    <p class="card-text">Сообщено. Reported: {{ reported_photo_count|default('0') }}</p>
+                    <a class="btn btn-primary text-white" href="{{ url_for('.manage_photo') }}">Управление. Manage</a>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card border-secondary mb-3">
-                <div class="card-header"><span class="oi oi-people"></span> Users</div>
+                <div class="card-header"><span class="oi oi-people"></span>Пользователи. Users</div>
                 <div class="card-body">
-                    <h4 class="card-title">Total: {{ user_count|default('0') }}</h4>
-                    <p class="card-text">Locked: {{ locked_user_count|default('0') }}
-                        Blocked: {{ blocked_user_count|default('0') }}</p>
-                    <a class="btn btn-primary text-white" href="{{ url_for('.manage_user') }}">Manage</a>
-                    <a class="btn btn-secondary text-white" href="{{ url_for('.manage_user', filter='locked') }}">View
+                    <h4 class="card-title">Всего. Total: {{ user_count|default('0') }}</h4>
+                    <p class="card-text">Закрыты. Locked: {{ locked_user_count|default('0') }}
+                        Заблокированы. Blocked: {{ blocked_user_count|default('0') }}</p>
+                    <a class="btn btn-primary text-white" href="{{ url_for('.manage_user') }}">Управление. Manage</a>
+                    <a class="btn btn-secondary text-white" href="{{ url_for('.manage_user', filter='locked') }}">Вид закрыт.View
                         Locked</a>
-                    <a class="btn btn-secondary text-white" href="{{ url_for('.manage_user', filter='blocked') }}">View
+                    <a class="btn btn-secondary text-white" href="{{ url_for('.manage_user', filter='blocked') }}">Вид заблокирован. View
                         Blocked</a>
                 </div>
             </div>
@@ -91,21 +91,21 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card border-danger mb-3">
-                <div class="card-header"><span class="oi oi-comment-square"></span> Comments</div>
+                <div class="card-header"><span class="oi oi-comment-square"></span> Комментарии. Comments</div>
                 <div class="card-body">
-                    <h4 class="card-title">Total: {{ comment_count|default('0') }}</h4>
-                    <p class="card-text">Reported: {{ reported_comments_count|default('0') }}</p>
-                    <a class="btn btn-primary text-white" href="{{ url_for('.manage_comment') }}">Manage</a>
+                    <h4 class="card-title">Всего. Total: {{ comment_count|default('0') }}</h4>
+                    <p class="card-text">Отправлено. Reported: {{ reported_comments_count|default('0') }}</p>
+                    <a class="btn btn-primary text-white" href="{{ url_for('.manage_comment') }}">Управление. Manage</a>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card border-success mb-3">
-                <div class="card-header"><span class="oi oi-tag"></span> Tags</div>
+                <div class="card-header"><span class="oi oi-tag"></span>Тэги. Tags</div>
                 <div class="card-body">
-                    <h4 class="card-title">Total: {{ tag_count|default('0') }}</h4>
+                    <h4 class="card-title">Всего. Total: {{ tag_count|default('0') }}</h4>
                     <p class="card-text">&nbsp;</p>
-                    <a class="btn btn-primary text-white" href="{{ url_for('.manage_tag') }}">Manage</a>
+                    <a class="btn btn-primary text-white" href="{{ url_for('.manage_tag') }}">Управление. Manage</a>
                 </div>
             </div>
         </div>

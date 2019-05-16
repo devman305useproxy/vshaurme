@@ -1,42 +1,42 @@
 {% extends 'admin/index.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block title %}Manage Users{% endblock %}
+{% block title %}Управление пользователями. Manage Users{% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            {{ render_breadcrumb_item('admin.index', 'Dashboard Home') }}
-            {{ render_breadcrumb_item('admin.manage_user', 'Manage User') }}
+            {{ render_breadcrumb_item('admin.index', 'Домашняя панель. Dashboard Home') }}
+            {{ render_breadcrumb_item('admin.manage_user', 'Управление пользователями. Manage User') }}
         </ol>
     </nav>
     <div class="page-header">
-        <h1>Users
+        <h1>Пользователи. Users
             <small class="text-muted">{{ pagination.total }}</small>
         </h1>
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Filter </a>
+                <a class="nav-link disabled" href="#">Фильтр. Filter </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter', 'all') == 'all' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='all') }}">All</a>
+                   href="{{ url_for('admin.manage_user', filter='all') }}">Все. All</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'locked' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='locked') }}">Locked</a>
+                   href="{{ url_for('admin.manage_user', filter='locked') }}">Закрыты. Locked</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'blocked' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='blocked') }}">Blocked</a>
+                   href="{{ url_for('admin.manage_user', filter='blocked') }}">Блокированы. Blocked</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'administrator' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='administrator') }}">Administrator</a>
+                   href="{{ url_for('admin.manage_user', filter='administrator') }}">Администраторы. Administrator</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'moderator' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='moderator') }}">Moderator</a>
+                   href="{{ url_for('admin.manage_user', filter='moderator') }}">Модератор. Moderator</a>
             </li>
         </ul>
     </div>
@@ -44,14 +44,14 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Avatars</th>
-                <th>Name/username</th>
-                <th>Role</th>
-                <th>Bio</th>
-                <th>City</th>
-                <th>Date</th>
-                <th>Photos</th>
-                <th>Actions</th>
+                <th>Аватары. Avatars</th>
+                <th>Имя/Ник. Name/username</th>
+                <th>Роль. Role</th>
+                <th>Биография. Bio</th>
+                <th>Город. City</th>
+                <th>Дата. Date</th>
+                <th>Фото. Photos</th>
+                <th>Действия. Actions</th>
             </tr>
             </thead>
             {% for user in users %}
@@ -110,6 +110,6 @@
         </table>
         <div class="page-footer">{{ render_pagination(pagination) }}</div>
     {% else %}
-        <div class="tip"><h5>No users.</h5></div>
+        <div class="tip"><h5>Пользователи отсутствуют. No users.</h5></div>
     {% endif %}
 {% endblock %}

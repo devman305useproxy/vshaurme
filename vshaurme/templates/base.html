@@ -1,7 +1,7 @@
 {% from 'bootstrap/nav.html' import render_nav_item %}
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,10 +30,10 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <div class="navbar-nav mr-auto">
-                    {{ render_nav_item('main.index', 'Home') }}
-                    {{ render_nav_item('main.explore', 'Explore') }}
+                    {{ render_nav_item('main.index', 'Главная. Home') }}
+                    {{ render_nav_item('main.explore', 'Смотреть. Explore') }}
                     <form class="form-inline my-2 my-lg-0" action="{{ url_for('main.search') }}">
-                        <input type="text" name="q" class="form-control mr-sm-1" placeholder="Фото, тэг или юзер. Photo, tag or user"
+                        <input type="text" name="q" class="form-control mr-sm-1" placeholder="Photo, tag or user"
                                required>
                         <button class="btn btn-light my-2 my-sm-0" type="submit">
                             <span class="oi oi-magnifying-glass"></span>
@@ -61,7 +61,7 @@
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
                             <h6 class="dropdown-header">Вошел как. Logged in as {{ current_user.username }}</h6>
                             <a class="dropdown-item" href="{{ url_for('user.index', username=current_user.username) }}">
-                                <span class="oi oi-person"></span> На главную. My Home
+                                <span class="oi oi-person"></span> Моя страница. My Home
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url_for('user.edit_profile') }}">
@@ -105,7 +105,7 @@
                     </small>
                 </p>
                 <p class="float-right">
-                    <small>Запечатляй и делись каждый чудным моментом. Capture and share every wonderful moment.</small>
+                    <small>Снимай и делись каждым прекрасным моментом. Capture and share every wonderful moment.</small>
                 </p>
             </footer>
         {% endblock %}

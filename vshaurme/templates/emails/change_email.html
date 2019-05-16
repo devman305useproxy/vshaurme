@@ -1,5 +1,10 @@
-<p>Hello {{ user.username }},</p>
-<p>Please visit the link below to verify your new email address:<br>
+<p>Привет. Hello {{ user.username }},</p>
+<p>
+    Пожалуйста прейдите по ссылке ниже для подтверждения вашей новой почты.
+    Please visit the link below to verify your new email address:<br>
     <a href="{{ url_for('user.change_email', token=token, _external=True) }}">{{ url_for('user.change_email', token=token, _external=True) }}</a>
 </p>
-<small>(Please do not reply to this notification, this inbox is not monitored.)</small>
+<small>
+    (Пожалуйста не отвечайте на это уведомление, эта почта не просматривается.)
+    (Please do not reply to this notification, this inbox is not monitored.)
+</small>

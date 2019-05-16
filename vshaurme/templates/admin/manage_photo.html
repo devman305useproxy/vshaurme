@@ -1,7 +1,7 @@
 {% extends 'admin/index.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block title %}Manage Photos{% endblock %}
+{% block title %}Управление фотографиями. Manage Photos{% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
@@ -11,19 +11,19 @@
         </ol>
     </nav>
     <div class="page-header">
-        <h1>Photos
+        <h1>Фото. Photos
             <small class="text-muted">{{ pagination.total }}</small>
             <span class="dropdown">
             <button class="btn btn-secondary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                Order by {{ order_rule }} <span class="oi oi-elevator"></span>
+                Сортировать по. Order by {{ order_rule }} <span class="oi oi-elevator"></span>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {% if order_rule == 'flag' %}
-                    <a class="dropdown-item" href="{{ url_for('.manage_photo', order='by_time') }}">Order by
+                    <a class="dropdown-item" href="{{ url_for('.manage_photo', order='by_time') }}">По дате. Order by
                     Time</a>
                 {% else %}
-                    <a class="dropdown-item" href="{{ url_for('.manage_photo', order='by_flag') }}">Order by
+                    <a class="dropdown-item" href="{{ url_for('.manage_photo', order='by_flag') }}">По флагу. Order by
                     Flag</a>
                 {% endif %}
             </div>
@@ -34,13 +34,13 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Tag</th>
-                <th>Author</th>
-                <th>Reported</th>
-                <th>Date</th>
-                <th>Actions</th>
+                <th>Изображение. Image</th>
+                <th>Описание. Description</th>
+                <th>Тег. Tag</th>
+                <th>Автор. Author</th>
+                <th>Сообщено. Reported</th>
+                <th>Дата. Date</th>
+                <th>Действия. Actions</th>
             </tr>
             </thead>
             {% for photo in photos %}
@@ -76,7 +76,7 @@
                               action="{{ url_for('main.delete_photo', photo_id=photo.id, next=request.full_path) }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?');">Delete
+                                    onclick="return confirm('Are you sure?');">Удалить. Delete
                             </button>
                         </form>
                     </td>
@@ -85,6 +85,6 @@
         </table>
         <div class="page-footer">{{ render_pagination(pagination) }}</div>
     {% else %}
-        <div class="tip"><h5>No photos.</h5></div>
+        <div class="tip"><h5>Фото отсутствуют. No photos.</h5></div>
     {% endif %}
 {% endblock %}
