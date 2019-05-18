@@ -7,40 +7,40 @@ from vshaurme.models import User
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember me')
-    submit = SubmitField('Log in')
+    email = StringField('Почта', validators=[DataRequired(), Length(1, 254), Email()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField('Войти')
 
 
 class RegisterForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20),
+    name = StringField('Как вас зовут', validators=[DataRequired(), Length(1, 30)])
+    email = StringField('Адрес почты', validators=[DataRequired(), Length(1, 254), Email()])
+    username = StringField('Имя пользователя', validators=[DataRequired(), Length(1, 20),
                                                    Regexp('^[a-zA-Z0-9]*$',
-                                                          message='The username should contain only a-z, A-Z and 0-9.')])
-    password = PasswordField('Password', validators=[
+                                                          message='Имя может содержать символы. The username should contain only a-z, A-Z and 0-9.')])
+    password = PasswordField('Пароль', validators=[
         DataRequired(), Length(8, 128), EqualTo('password2')])
-    password2 = PasswordField('Confirm password', validators=[DataRequired()])
-    submit = SubmitField()
+    password2 = PasswordField('Повторите пароль', validators=[DataRequired()])
+    submit = SubmitField("Зарегистрироваться")
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('The email is already in use.')
+            raise ValidationError('Пользователь с такой почтой уже зарегистрирован. The email is already in use.')
 
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError('Данное имя пользователя уже используется. The username is already in use.')
 
 
 class ForgetPasswordForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    submit = SubmitField()
+    email = StringField('Почта', validators=[DataRequired(), Length(1, 254), Email()])
+    submit = SubmitField("Отправить ссылку для сброса пароля")
 
 
 class ResetPasswordForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    password = PasswordField('Password', validators=[
+    email = StringField('Почта', validators=[DataRequired(), Length(1, 254), Email()])
+    password = PasswordField('Пароль', validators=[
         DataRequired(), Length(8, 128), EqualTo('password2')])
-    password2 = PasswordField('Confirm password', validators=[DataRequired()])
-    submit = SubmitField()
+    password2 = PasswordField('Повторите пароль', validators=[DataRequired()])
+    submit = SubmitField("Далее")
