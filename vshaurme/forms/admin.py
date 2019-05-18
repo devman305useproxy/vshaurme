@@ -7,11 +7,11 @@ from vshaurme.models import User, Role
 
 
 class EditProfileAdminForm(EditProfileForm):
-    email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    role = SelectField('Role', coerce=int)
-    active = BooleanField('Active')
-    confirmed = BooleanField('Confirmed')
-    submit = SubmitField()
+    email = StringField('Почта', validators=[DataRequired(), Length(1, 254), Email()])
+    role = SelectField('Роль', coerce=int)
+    active = BooleanField('Активен. Active')
+    confirmed = BooleanField('Подтвержден. Confirmed')
+    submit = SubmitField("Принять")
 
     def __init__(self, user, *args, **kwargs):
         super(EditProfileAdminForm, self).__init__(*args, **kwargs)
@@ -21,8 +21,8 @@ class EditProfileAdminForm(EditProfileForm):
 
     def validate_username(self, field):
         if field.data != self.user.username and User.query.filter_by(username=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError('Данное имя пользователя уже используется.The username is already in use.')
 
     def validate_email(self, field):
         if field.data != self.user.email and User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('The email is already in use.')
+            raise ValidationError('Данный адрес почты уже зарегистрирован. The email is already in use.')
