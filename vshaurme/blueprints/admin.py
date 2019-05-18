@@ -47,7 +47,7 @@ def edit_profile_admin(user_id):
         user.username = form.username.data
         user.email = form.email.data
         db.session.commit()
-        flash('Profile updated.', 'success')
+        flash('Профиль обновлен. Profile updated.', 'success')
         return redirect_back()
     form.name.data = user.name
     form.role.data = user.role_id
@@ -66,10 +66,10 @@ def edit_profile_admin(user_id):
 def block_user(user_id):
     user = User.query.get_or_404(user_id)
     if user.role.name in ['Administrator', 'Moderator']:
-        flash('Permission denied.', 'warning')
+        flash('Доступ запрещен. Permission denied.', 'warning')
     else:
         user.block()
-        flash('Account blocked.', 'info')
+        flash('Аккаунт заблокирован. Account blocked.', 'info')
     return redirect_back()
 
 
@@ -78,7 +78,7 @@ def block_user(user_id):
 def unblock_user(user_id):
     user = User.query.get_or_404(user_id)
     user.unblock()
-    flash('Block canceled.', 'info')
+    flash('Блокировка отменена. Block canceled.', 'info')
     return redirect_back()
 
 
@@ -87,10 +87,10 @@ def unblock_user(user_id):
 def lock_user(user_id):
     user = User.query.get_or_404(user_id)
     if user.role.name in ['Administrator', 'Moderator']:
-        flash('Permission denied.', 'warning')
+        flash('Доступ запрещен. Permission denied.', 'warning')
     else:
         user.lock()
-        flash('Account locked.', 'info')
+        flash('Аккаунт закрыт. Account locked.', 'info')
     return redirect_back()
 
 
@@ -99,7 +99,7 @@ def lock_user(user_id):
 def unlock_user(user_id):
     user = User.query.get_or_404(user_id)
     user.unlock()
-    flash('Lock canceled.', 'info')
+    flash('Профиль открыт. Lock canceled.', 'info')
     return redirect_back()
 
 
@@ -109,7 +109,7 @@ def delete_tag(tag_id):
     tag = Tag.query.get_or_404(tag_id)
     db.session.delete(tag)
     db.session.commit()
-    flash('Tag deleted.', 'info')
+    flash('Тег удален. Tag deleted.', 'info')
     return redirect_back()
 
 
