@@ -8,26 +8,26 @@ from vshaurme.models import User
 
 
 class EditProfileForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20),
+    name = StringField('Ваше имя', validators=[DataRequired(), Length(1, 30)])
+    username = StringField('Имя пользователя', validators=[DataRequired(), Length(1, 20),
                                                    Regexp('^[a-zA-Z0-9]*$',
-                                                          message='The username should contain only a-z, A-Z and 0-9.')])
-    website = StringField('Website', validators=[Optional(), Length(0, 255)])
-    location = StringField('City', validators=[Optional(), Length(0, 50)])
-    bio = TextAreaField('Bio', validators=[Optional(), Length(0, 120)])
-    submit = SubmitField()
+                                                          message='Имя пользователя может содержать только символы / The username should contain only: a-z, A-Z and 0-9.')])
+    website = StringField('Вебсайт.Website', validators=[Optional(), Length(0, 255)])
+    location = StringField('Город', validators=[Optional(), Length(0, 50)])
+    bio = TextAreaField('Пара слов о себе', validators=[Optional(), Length(0, 120)])
+    submit = SubmitField("Редактировать")
 
     def validate_username(self, field):
         if field.data != current_user.username and User.query.filter_by(username=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError('Данное имя пользователся уже используется.')
 
 
 class UploadAvatarForm(FlaskForm):
-    image = FileField('Upload', validators=[
+    image = FileField('Загрузить', validators=[
         FileRequired(),
-        FileAllowed(['jpg', 'png'], 'The file format should be .jpg or .png.')
+        FileAllowed(['jpg', 'png'], 'Файл должен быть в формате .jpg или .png.')
     ])
-    submit = SubmitField()
+    submit = SubmitField("Загрузить")
 
 
 class CropAvatarForm(FlaskForm):
@@ -35,42 +35,42 @@ class CropAvatarForm(FlaskForm):
     y = HiddenField()
     w = HiddenField()
     h = HiddenField()
-    submit = SubmitField('Crop and Update')
+    submit = SubmitField('Обрезать и обновить')
 
 
 class ChangeEmailForm(FlaskForm):
-    email = StringField('New Email', validators=[DataRequired(), Length(1, 254), Email()])
-    submit = SubmitField()
+    email = StringField('Новый адрес почты', validators=[DataRequired(), Length(1, 254), Email()])
+    submit = SubmitField("Изменить")
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('The email is already in use.')
+            raise ValidationError('Данный адрес почты уже The email is already in use.')
 
 
 class ChangePasswordForm(FlaskForm):
-    old_password = PasswordField('Old Password', validators=[DataRequired()])
-    password = PasswordField('New Password', validators=[
+    old_password = PasswordField('Старый пароль', validators=[DataRequired()])
+    password = PasswordField('Новый пароль', validators=[
         DataRequired(), Length(8, 128), EqualTo('password2')])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField()
+    password2 = PasswordField('Повторите новый пароль', validators=[DataRequired()])
+    submit = SubmitField("Изменить")
 
 
 class NotificationSettingForm(FlaskForm):
-    receive_comment_notification = BooleanField('New comment')
-    receive_follow_notification = BooleanField('New follower')
-    receive_collect_notification = BooleanField('New collector')
-    submit = SubmitField()
+    receive_comment_notification = BooleanField('Новый комментарий')
+    receive_follow_notification = BooleanField('Новый подписчик')
+    receive_collect_notification = BooleanField('Новый коллекционер')
+    submit = SubmitField("Принять")
 
 
 class PrivacySettingForm(FlaskForm):
-    public_collections = BooleanField('Public my collection')
-    submit = SubmitField()
+    public_collections = BooleanField('Показывать мою коллекцию. Public my collection')
+    submit = SubmitField("Принять")
 
 
 class DeleteAccountForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-    submit = SubmitField()
+    username = StringField('Имя пользователя', validators=[DataRequired(), Length(1, 20)])
+    submit = SubmitField("Удалить")
 
     def validate_username(self, field):
         if field.data != current_user.username:
-            raise ValidationError('Wrong username.')
+            raise ValidationError('Неправильное имя пользователя.')
