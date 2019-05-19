@@ -2,7 +2,7 @@
 {% from 'bootstrap/pagination.html' import render_pagination %}
 {% from 'macros.html' import photo_card %}
 
-{% block title %}Коллекции. {{ user.name }}'s collection{% endblock %}
+{% block title %}Коллекция пользователя {{ user.name }}{% endblock %}
 
 {% block content %}
     {% include 'user/_header.html' %}
@@ -15,12 +15,14 @@
                     {% endfor %}
                 {% else %}
                     <div class="tip">
-                        <h3>Коллекции отсутствуют. No collection.</h3>
+                        <h3>Коллекция пуста</h3>
                     </div>
                 {% endif %}
             {% else %}
                 <div class="tip">
-                    <h3>Коллекции этого пользователя конфиденциальны. This user's collections was private.</h3>
+                    <h3>
+                        Коллекция этого пользователя конфиденциальна.
+                    </h3>
                 </div>
             {% endif %}
         </div>
