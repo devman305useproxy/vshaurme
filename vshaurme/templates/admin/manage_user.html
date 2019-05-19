@@ -1,42 +1,42 @@
 {% extends 'admin/index.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block title %}Управление пользователями. Manage Users{% endblock %}
+{% block title %}Управление пользователями{% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            {{ render_breadcrumb_item('admin.index', 'Домашняя панель. Dashboard Home') }}
-            {{ render_breadcrumb_item('admin.manage_user', 'Управление пользователями. Manage User') }}
+            {{ render_breadcrumb_item('admin.index', 'Общая панель') }}
+            {{ render_breadcrumb_item('admin.manage_user', 'Управление пользователями') }}
         </ol>
     </nav>
     <div class="page-header">
-        <h1>Пользователи. Users
+        <h1>Пользователи
             <small class="text-muted">{{ pagination.total }}</small>
         </h1>
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Фильтр. Filter </a>
+                <a class="nav-link disabled" href="#">Фильтр</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter', 'all') == 'all' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='all') }}">Все. All</a>
+                   href="{{ url_for('admin.manage_user', filter='all') }}">Все</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'locked' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='locked') }}">Закрыты. Locked</a>
+                   href="{{ url_for('admin.manage_user', filter='locked') }}">Закрыты</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'blocked' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='blocked') }}">Блокированы. Blocked</a>
+                   href="{{ url_for('admin.manage_user', filter='blocked') }}">Заблокированы</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'administrator' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='administrator') }}">Администраторы. Administrator</a>
+                   href="{{ url_for('admin.manage_user', filter='administrator') }}">Администраторы</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'moderator' %}active{% endif %}"
-                   href="{{ url_for('admin.manage_user', filter='moderator') }}">Модератор. Moderator</a>
+                   href="{{ url_for('admin.manage_user', filter='moderator') }}">Модераторы</a>
             </li>
         </ul>
     </div>
@@ -44,14 +44,14 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Аватары. Avatars</th>
-                <th>Имя/Ник. Name/username</th>
-                <th>Роль. Role</th>
-                <th>Биография. Bio</th>
-                <th>Город. City</th>
-                <th>Дата. Date</th>
-                <th>Фото. Photos</th>
-                <th>Действия. Actions</th>
+                <th>Аватар</th>
+                <th>Имя/Ник</th>
+                <th>Роль</th>
+                <th>О себе</th>
+                <th>Город</th>
+                <th>Дата</th>
+                <th>Фото</th>
+                <th>Действия</th>
             </tr>
             </thead>
             {% for user in users %}
@@ -71,38 +71,38 @@
                             <form class="inline" action="{{ url_for('admin.unlock_user', user_id=user.id) }}"
                                   method="post">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <input type="submit" onclick="return confirm('Are you sure?');"
-                                       class="btn btn-secondary btn-sm" value="Unlock">
+                                <input type="submit" onclick="return confirm('Вы уверены?');"
+                                       class="btn btn-secondary btn-sm" value="Открыть/Unlock">
                             </form>
                         {% else %}
                             <form class="inline" action="{{ url_for('admin.lock_user', user_id=user.id) }}"
                                   method="post">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <input type="submit" onclick="return confirm('Are you sure?');"
-                                       class="btn btn-warning btn-sm" value="Lock">
+                                <input type="submit" onclick="return confirm('Вы уверены?');"
+                                       class="btn btn-warning btn-sm" value="Закрыть/Lock">
                             </form>
                         {% endif %}
                         {% if user.active %}
                             <form class="inline" action="{{ url_for('admin.block_user', user_id=user.id) }}"
                                   method="post">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <input type="submit" onclick="return confirm('Are you sure?');"
-                                       class="btn btn-warning btn-sm" value="Block">
+                                <input type="submit" onclick="return confirm('Вы уверены?');"
+                                       class="btn btn-warning btn-sm" value="Блокировать/Block">
                             </form>
                         {% else %}
                             <form class="inline" action="{{ url_for('admin.unblock_user', user_id=user.id) }}"
                                   method="post">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <input type="submit" onclick="return confirm('Are you sure?');"
-                                       class="btn btn-secondary btn-sm" value="Unblock">
+                                <input type="submit" onclick="return confirm('Вы уверены?');"
+                                       class="btn btn-secondary btn-sm" value="Разблокировать/Unblock">
                             </form>
                         {% endif %}
                     {% endif %}
-                        <a class="btn btn-light btn-sm" href="mailto:{{ user.email }}">Email</a>
+                        <a class="btn btn-light btn-sm" href="mailto:{{ user.email }}">Отправить письмо</a>
                         {% if current_user.is_admin %}
                             <a class="btn btn-warning btn-sm"
-                               href="{{ url_for('admin.edit_profile_admin', user_id=user.id) }}">Edit
-                                profile</a>
+                               href="{{ url_for('admin.edit_profile_admin', user_id=user.id) }}">Редактировать профиль
+                            </a>
                         {% endif %}
                     </td>
                 </tr>
@@ -110,6 +110,6 @@
         </table>
         <div class="page-footer">{{ render_pagination(pagination) }}</div>
     {% else %}
-        <div class="tip"><h5>Пользователи отсутствуют. No users.</h5></div>
+        <div class="tip"><h5>Пользователи отсутствуют</h5></div>
     {% endif %}
 {% endblock %}
