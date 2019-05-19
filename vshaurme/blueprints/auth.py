@@ -21,12 +21,12 @@ def login():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user is not None and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
-                flash('Успешный вход в систему. Login success.', 'info')
+                flash('Успешный вход в систему', 'info')
                 return redirect_back()
             else:
-                flash('Ваш аккаунт заблокирован. Your account is blocked.', 'warning')
+                flash('Ваш аккаунт заблокирован', 'warning')
                 return redirect(url_for('main.index'))
-        flash('Неправильный адрес почты/пароль. Invalid email or password.', 'warning')
+        flash('Неправильный адрес почты/пароль.', 'warning')
     return render_template('auth/login.html', form=form)
 
 
@@ -47,7 +47,7 @@ def re_authenticate():
 @login_required
 def logout():
     logout_user()
-    flash('Успеный выход из системы. Logout success.', 'info')
+    flash('Успеный выход из системы', 'info')
     return redirect(url_for('main.index'))
 
 
@@ -68,7 +68,7 @@ def register():
         db.session.commit()
         token = generate_token(user=user, operation='confirm')
         send_confirm_email(user=user, token=token)
-        flash('Подтвердите письмо. проверьте почту. Confirm email sent, check your inbox.', 'info')
+        flash('Ответьте на письмо для подтверждения регистрации. Проверьте почту.', 'info')
         return redirect(url_for('.login'))
     return render_template('auth/register.html', form=form)
 
@@ -80,10 +80,10 @@ def confirm(token):
         return redirect(url_for('main.index'))
 
     if validate_token(user=current_user, token=token, operation=Operations.CONFIRM):
-        flash('Аккаунт поджтвержден. Account confirmed.', 'success')
+        flash('Аккаунт подтвержден', 'success')
         return redirect(url_for('main.index'))
     else:
-        flash('Неправильный или истекший токен. Invalid or expired token.', 'danger')
+        flash('Неправильное значение/истек срок токена', 'danger')
         return redirect(url_for('.resend_confirm_email'))
 
 
@@ -95,7 +95,7 @@ def resend_confirm_email():
 
     token = generate_token(user=current_user, operation=Operations.CONFIRM)
     send_confirm_email(user=current_user, token=token)
-    flash('Новое письмо отправлено, проверьте почту. New email sent, check your inbox.', 'info')
+    flash('Новое письмо отправлено, проверьте почту', 'info')
     return redirect(url_for('main.index'))
 
 
@@ -110,9 +110,9 @@ def forget_password():
         if user:
             token = generate_token(user=user, operation=Operations.RESET_PASSWORD)
             send_reset_password_email(user=user, token=token)
-            flash('Письмо для сброса пароля отправлено, проверьте почту. Password reset email sent, check your inbox.', 'info')
+            flash('Письмо для сброса пароля отправлено, проверьте почту', 'info')
             return redirect(url_for('.login'))
-        flash('Неправильный адрес почты. Invalid email.', 'warning')
+        flash('Неправильный адрес почты', 'warning')
         return redirect(url_for('.forget_password'))
     return render_template('auth/reset_password.html', form=form)
 
@@ -129,9 +129,9 @@ def reset_password(token):
             return redirect(url_for('main.index'))
         if validate_token(user=user, token=token, operation=Operations.RESET_PASSWORD,
                           new_password=form.password.data):
-            flash('Пароль обновлен. Password updated.', 'success')
+            flash('Пароль обновлен', 'success')
             return redirect(url_for('.login'))
         else:
-            flash('Неправильная или истекшая ссылка. Invalid or expired link.', 'danger')
+            flash('Неправильная или истекшая ссылка', 'danger')
             return redirect(url_for('.forget_password'))
     return render_template('auth/reset_password.html', form=form)
