@@ -16,7 +16,9 @@
             <img class="rounded avatar-m" src="{{ url_for('main.get_avatar', filename=user.avatar_m) }}">
         </a>
         <h6>
-            <a href="{{ url_for('user.index', username=user.username) }}">{{ user.name }}</a>
+            <a href="{{ url_for('user.index', username=user.username) }}">
+                {{ user.name }}
+            </a>
         </h6>
         {{ follow_area(user) }}
     </div>
@@ -29,18 +31,24 @@
                 <form class="inline" method="post"
                       action="{{ url_for('user.unfollow', username=user.username, next=request.full_path) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-dark btn-sm">Отписаться. Unfollow</button>
+                    <button type="submit" class="btn btn-dark btn-sm">
+                        Отписаться
+                    </button>
                     {% if current_user.is_followed_by(user) %}
-                        <p class="badge badge-light">Подписаться друг на друга. Follow each other</p>
+                        <p class="badge badge-light">
+                            Подписаны друг на друга
+                        </p>
                     {% endif %}
                 </form>
             {% else %}
                 <form class="inline" method="post"
                       action="{{ url_for('user.follow', username=user.username, next=request.full_path) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-primary btn-sm">Подписаться. Follow</button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        Подписаться
+                    </button>
                     {% if current_user.is_followed_by(user) %}
-                        <p class="badge badge-light">Подписан на вас. Follows you</p>
+                        <p class="badge badge-light">Подписан на вас</p>
                     {% endif %}
                 </form>
             {% endif %}
@@ -49,7 +57,7 @@
         <form class="inline" method="post"
               action="{{ url_for('user.follow', username=user.username) }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit" class="btn btn-primary btn-sm">Подписаться. Follow</button>
+            <button type="submit" class="btn btn-primary btn-sm">Подписаться</button>
         </form>
     {% endif %}
 {% endmacro %}
