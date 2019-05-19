@@ -12,7 +12,7 @@ class EditProfileForm(FlaskForm):
     username = StringField('Имя пользователя', validators=[DataRequired(), Length(1, 20),
                                                    Regexp('^[a-zA-Z0-9]*$',
                                                           message='Имя пользователя может содержать только символы / The username should contain only: a-z, A-Z and 0-9.')])
-    website = StringField('Вебсайт.Website', validators=[Optional(), Length(0, 255)])
+    website = StringField('Вебсайт', validators=[Optional(), Length(0, 255)])
     location = StringField('Город', validators=[Optional(), Length(0, 50)])
     bio = TextAreaField('Пара слов о себе', validators=[Optional(), Length(0, 120)])
     submit = SubmitField("Редактировать")
