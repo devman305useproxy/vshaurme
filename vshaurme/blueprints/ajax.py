@@ -10,7 +10,7 @@ ajax_bp = Blueprint('ajax', __name__)
 @ajax_bp.route('/notifications-count')
 def notifications_count():
     if not current_user.is_authenticated:
-        return jsonify(message='Требуется войти. Login required.'), 403
+        return jsonify(message='Требуется войти в свою учетную запись'), 403
 
     count = Notification.query.with_parent(current_user).filter_by(is_read=False).count()
     return jsonify(count=count)
@@ -39,43 +39,43 @@ def collectors_count(photo_id):
 @ajax_bp.route('/collect/<int:photo_id>', methods=['POST'])
 def collect(photo_id):
     if not current_user.is_authenticated:
-        return jsonify(message='Требуется войти. Login required.'), 403
+        return jsonify(message='Требуется войти в свою учетную запись'), 403
     if not current_user.confirmed:
-        return jsonify(message='Требуется подтверждение аккаунта. Confirm account required.'), 400
+        return jsonify(message='Требуется подтверждение регистрации аккаунта'), 400
     if not current_user.can('COLLECT'):
-        return jsonify(message='Нет доступа. No permission.'), 403
+        return jsonify(message='Доступ запрещен'), 403
 
     photo = Photo.query.get_or_404(photo_id)
     if current_user.is_collecting(photo):
-        return jsonify(message='Уже добавлено. Already collected.'), 400
+        return jsonify(message='Уже добавлено в коллекцию'), 400
 
     current_user.collect(photo)
     if current_user != photo.author and photo.author.receive_collect_notification:
         push_collect_notification(collector=current_user, photo_id=photo_id, receiver=photo.author)
-    return jsonify(message='Фото в коллекции. Photo collected.')
+    return jsonify(message='Фото в коллекции')
 
 
 @ajax_bp.route('/uncollect/<int:photo_id>', methods=['POST'])
 def uncollect(photo_id):
     if not current_user.is_authenticated:
-        return jsonify(message='Требуется войти. Login required.'), 403
+        return jsonify(message='Требуется войти в свою учетную запись'), 403
 
     photo = Photo.query.get_or_404(photo_id)
     if not current_user.is_collecting(photo):
-        return jsonify(message='Пока не добавлено. Not collect yet.'), 400
+        return jsonify(message='Еще не в коллекции. Not collect yet.'), 400
 
     current_user.uncollect(photo)
-    return jsonify(message='Отмена взятия в коллекцию. Collect canceled.')
+    return jsonify(message='Убрано из коллекции')
 
 
 @ajax_bp.route('/follow/<username>', methods=['POST'])
 def follow(username):
     if not current_user.is_authenticated:
-        return jsonify(message='Требуется вход в систему.Login required.'), 403
+        return jsonify(message='Требуется войти в свою учетную запись'), 403
     if not current_user.confirmed:
-        return jsonify(message='Требуется подтверждение аккаунта. Confirm account required.'), 400
+        return jsonify(message='Требуется подтверждение регистрации аккаунта'), 400
     if not current_user.can('FOLLOW'):
-        return jsonify(message='Нет доступа. No permission.'), 403
+        return jsonify(message='Доступ запрещен'), 403
 
     user = User.query.filter_by(username=username).first_or_404()
     if current_user.is_following(user):
@@ -84,13 +84,13 @@ def follow(username):
     current_user.follow(user)
     if user.receive_collect_notification:
         push_follow_notification(follower=current_user, receiver=user)
-    return jsonify(message='Пользователь подписан. User followed.')
+    return jsonify(message='Вы подписались на этого пользователя')
 
 
 @ajax_bp.route('/unfollow/<username>', methods=['POST'])
 def unfollow(username):
     if not current_user.is_authenticated:
-        return jsonify(message='Требуется вход в систему. Login required.'), 403
+        return jsonify(message='Требуется войти в свою учетную запись'), 403
 
     user = User.query.filter_by(username=username).first_or_404()
     if not current_user.is_following(user):
