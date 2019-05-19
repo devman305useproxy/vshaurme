@@ -2,7 +2,7 @@
 {% from 'bootstrap/pagination.html' import render_pagination %}
 {% from 'macros.html' import user_card with context %}
 
-{% block title %}Подписки. {{ user.name }}'s following{% endblock %}
+{% block title %}Подписки пользователя {{ user.name }}{% endblock %}
 
 {% block content %}
     {% include 'user/_header.html' %}
@@ -16,7 +16,7 @@
                 {% endfor %}
             {% else %}
                 <div class="tip">
-                    <h3>Подписки отсутствуют. No followings.</h3>
+                    <h3>Подписки отсутствуют</h3>
                 </div>
             {% endif %}
         </div>
