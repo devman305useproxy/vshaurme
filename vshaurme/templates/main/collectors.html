@@ -2,21 +2,24 @@
 {% from 'bootstrap/pagination.html' import render_pagination %}
 {% from 'macros.html' import user_card with context %}
 
-{% block title %}Коллекционеры. Collectors{% endblock %}
+{% block title %}Коллекционеры{% endblock %}
 
 {% block content %}
     <div class="page-header">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-default btn-sm" href="{{ url_for('main.show_photo', photo_id=photo.id) }}">
-                    <span class="oi oi-arrow-left" aria-hidden="true"></span>Вернуться. Return
+                <a class="btn btn-default btn-sm" 
+                    href="{{ url_for('main.show_photo', photo_id=photo.id) }}"
+                >
+                    <span class="oi oi-arrow-left" aria-hidden="true"></span>
+                    Назад
                 </a>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h3>{{ photo.collectors|length }} Collectors</h3>
+            <h3>Коллекционеров: {{ photo.collectors|length }}</h3>
             {% for collect in collects %}
                 {{ user_card(user=collect.collector) }}
             {% endfor %}
