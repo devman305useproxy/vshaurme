@@ -2,24 +2,24 @@
 {% from 'bootstrap/form.html' import render_form %}
 {% from 'bootstrap/nav.html' import render_breadcrumb_item %}
 
-{% block title %}Редактировать профиль. Edit profile{% endblock %}
+{% block title %}Редактировать профиль{% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            {{ render_breadcrumb_item('admin.index', 'Главная панель. Dashboard Home') }}
+            {{ render_breadcrumb_item('admin.index', 'Домашняя панель. Dashboard Home') }}
             {{ render_breadcrumb_item('admin.manage_user', 'Управление пользователями. Manage User') }}
-            {{ render_breadcrumb_item('admin.edit_profile_admin', 'Редактирование профиля. Edit Profile') }}
+            {{ render_breadcrumb_item('admin.edit_profile_admin', 'Редактирование профиля') }}
         </ol>
     </nav>
     <div class="page-header">
-        <h1>Редактировать профиль. Edit profile
-            <a class="float-right btn btn-light" href="{{ url_for('user.index', username=user.username) }}">Вернуть домашнюю страницу. Return
+        <h1>Редактировать профиль
+            <a class="float-right btn btn-light" href="{{ url_for('user.index', username=user.username) }}">Вернуть домашнюю страницу {{ user.username }}. Return
                 {{ user.username }}'s homepage</a>
         </h1>
     </div>
     <div class="card w-100 bg-light">
-        <h3 class="card-header">Редактировать профиль. Edit Profile</h3>
+        <h3 class="card-header">Редактировать профиль</h3>
         <div class="card-body">
             {{ render_form(form) }}
         </div>
