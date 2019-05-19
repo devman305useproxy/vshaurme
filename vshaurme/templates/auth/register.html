@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% from 'bootstrap/form.html' import render_form %}
 
-{% block title %}Зарегистрироваться. Register{% endblock %}
+{% block title %}Зарегистрироваться{% endblock %}
 
 {% block content %}
     <div class="jumbotron">
@@ -11,11 +11,14 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-3 w-100 bg-light">
-                    <div class="card-header"><h4>Добро пожаловать. Welcome to Vshaurme!</h4></div>
+                    <div class="card-header"><h4>Добро пожаловать во Vshaurme!</h4></div>
                     <div class="card-body">
                         {{ render_form(form) }}
                         <hr>
-                        <small>Уже зарегистрированы? Already have an account? <a href="{{ url_for('.login') }}">Кликните тут для входа. Click here to log in.</a>
+                        <small>Уже зарегистрированы?
+                            <a href="{{ url_for('.login') }}">
+                                Кликните тут для входа.
+                            </a>
                         </small>
                     </div>
                 </div>
