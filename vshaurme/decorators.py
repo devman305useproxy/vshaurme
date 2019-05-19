@@ -9,8 +9,8 @@ def confirm_required(func):
     def decorated_function(*args, **kwargs):
         if not current_user.confirmed:
             message = Markup(
-                'Пожалйста подтвердите учетную запись.'
-                'Не получили письмо с подтверждением?'
+                'Пожалйста подтвердите учетную запись. '
+                'Не получили письмо с подтверждением? '
                 '<a class="alert-link" href="%s">Послать письмо с подтверждением заново.</a>' %
                 url_for('auth.resend_confirm_email'))
             flash(message, 'warning')
