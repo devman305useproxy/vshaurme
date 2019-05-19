@@ -1,27 +1,26 @@
 {% extends 'admin/index.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block title %}Управление фотографиями. Manage Photos{% endblock %}
+{% block title %}Управление фотографиями{% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            {{ render_breadcrumb_item('admin.index', 'Dashboard Home') }}
-            {{ render_breadcrumb_item('admin.manage_photo', 'Manage Photo') }}
+            {{ render_breadcrumb_item('admin.index', 'Общая панель') }}
+            {{ render_breadcrumb_item('admin.manage_photo', 'Управление фото') }}
         </ol>
     </nav>
     <div class="page-header">
-        <h1>Фото. Photos
+        <h1>Фото
             <small class="text-muted">{{ pagination.total }}</small>
             <span class="dropdown">
             <button class="btn btn-secondary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                Сортировать по. Order by {{ order_rule }} <span class="oi oi-elevator"></span>
+                Сортировать по {{ order_rule }} <span class="oi oi-elevator"></span>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {% if order_rule == 'flag' %}
-                    <a class="dropdown-item" href="{{ url_for('.manage_photo', order='by_time') }}">По дате. Order by
-                    Time</a>
+                    <a class="dropdown-item" href="{{ url_for('.manage_photo', order='by_time') }}">По дате</a>
                 {% else %}
                     <a class="dropdown-item" href="{{ url_for('.manage_photo', order='by_flag') }}">По флагу. Order by
                     Flag</a>
@@ -34,13 +33,13 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Изображение. Image</th>
-                <th>Описание. Description</th>
-                <th>Тег. Tag</th>
-                <th>Автор. Author</th>
-                <th>Сообщено. Reported</th>
-                <th>Дата. Date</th>
-                <th>Действия. Actions</th>
+                <th>Изображение</th>
+                <th>Описание</th>
+                <th>Тег</th>
+                <th>Автор</th>
+                <th>Сообщений о нарушении</th>
+                <th>Дата</th>
+                <th>Действия</th>
             </tr>
             </thead>
             {% for photo in photos %}
@@ -58,7 +57,7 @@
                                       action="{{ url_for('admin.delete_tag', tag_id=tag.id, next=request.full_path) }}">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                     <button type="submit" class="btn badge badge-danger mb-1"
-                                            onclick="return confirm('Are you sure?');">
+                                            onclick="return confirm('Вы уверены?');">
                                         {{ tag.name }} <span class="oi oi-trash" aria-hidden="true">
                                 </span>
                                     </button>
@@ -76,7 +75,7 @@
                               action="{{ url_for('main.delete_photo', photo_id=photo.id, next=request.full_path) }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?');">Удалить. Delete
+                                    onclick="return confirm('Вы уверены?');">Удалить
                             </button>
                         </form>
                     </td>
@@ -85,6 +84,6 @@
         </table>
         <div class="page-footer">{{ render_pagination(pagination) }}</div>
     {% else %}
-        <div class="tip"><h5>Фото отсутствуют. No photos.</h5></div>
+        <div class="tip"><h5>Фото отсутствуют</h5></div>
     {% endif %}
 {% endblock %}
