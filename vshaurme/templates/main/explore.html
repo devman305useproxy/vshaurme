@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% from 'macros.html' import photo_card with context %}
 
-{% block title %}Смотреть. Explore{% endblock %}
+{% block title %}Увидеть новое{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -13,7 +13,8 @@
     </div>
     <div class="text-center">
         <a class="btn btn-primary" href="{{ url_for('.explore') }}">
-            <span class="oi oi-loop-circular"></span>Изменить. Change
+            <span class="oi oi-loop-circular"></span>
+            Обновить. Change
         </a>
     </div>
 {% endblock %}
