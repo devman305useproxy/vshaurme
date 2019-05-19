@@ -22,7 +22,7 @@
     </div>
     <p class="card-text">
         <a href="{{ url_for('user.index', username=user.username) }}">
-            <strong>{{ user.photos|length }}</strong> Фото
+            Фото: <strong>{{ user.photos|length }}</strong>
         </a>
         &nbsp;
         <a href="{{ url_for('user.show_followers', username=user.username) }}">
@@ -36,7 +36,7 @@
     <a href="{{ url_for('user.index', username=user.username) }}" 
         class="btn btn-light btn-sm"
     >
-        Домашняя страница
+        Страница пользователя
     </a>
     {% if current_user.is_authenticated %}
         {% if user != current_user %}
