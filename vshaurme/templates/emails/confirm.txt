@@ -2,10 +2,8 @@
 
 Welcome to Vshaurme!
 
-Пожалуйста прейдите по ссылке ниже для подтверждения вашей почты.
-Please visit the link below to verify your email address:
+Пожалуйста прейдите по ссылке ниже для подтверждения вашей почты:
 
     {{ url_for('auth.confirm', token=token, _external=True) }}
 
 (Пожалуйста не отвечайте на это уведомление, эта почта не просматривается.)
-(Please do not reply to this notification, this inbox is not monitored.)
