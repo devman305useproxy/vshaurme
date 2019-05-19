@@ -19,7 +19,7 @@ class EditProfileForm(FlaskForm):
 
     def validate_username(self, field):
         if field.data != current_user.username and User.query.filter_by(username=field.data).first():
-            raise ValidationError('Данное имя пользователся уже используется.')
+            raise ValidationError('Данное имя пользователя уже используется.')
 
 
 class UploadAvatarForm(FlaskForm):
@@ -27,7 +27,7 @@ class UploadAvatarForm(FlaskForm):
         FileRequired(),
         FileAllowed(['jpg', 'png'], 'Файл должен быть в формате .jpg или .png.')
     ])
-    submit = SubmitField("Загрузить")
+    submit = SubmitField("Начать загрузку")
 
 
 class CropAvatarForm(FlaskForm):
@@ -44,7 +44,7 @@ class ChangeEmailForm(FlaskForm):
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('Данный адрес почты уже The email is already in use.')
+            raise ValidationError('Данный адрес почты уже зарегистрирован.')
 
 
 class ChangePasswordForm(FlaskForm):
@@ -58,12 +58,12 @@ class ChangePasswordForm(FlaskForm):
 class NotificationSettingForm(FlaskForm):
     receive_comment_notification = BooleanField('Новый комментарий')
     receive_follow_notification = BooleanField('Новый подписчик')
-    receive_collect_notification = BooleanField('Новый коллекционер')
+    receive_collect_notification = BooleanField('Кто-то взял мое фото себе в коллекцию')
     submit = SubmitField("Принять")
 
 
 class PrivacySettingForm(FlaskForm):
-    public_collections = BooleanField('Показывать мою коллекцию. Public my collection')
+    public_collections = BooleanField('Мою коллекция видна всем пользователям.')
     submit = SubmitField("Принять")
 
 
