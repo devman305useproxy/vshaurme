@@ -1,7 +1,7 @@
 <div class="comments" id="comments">
     <h3>Комментарии: {{ photo.comments|length }}
         <small>
-            <a href="{{ url_for('.show_photo', photo_id=photo.id, page=pagination.pages or 1) }}#comment-form">Последнее. latest</a>
+            <a href="{{ url_for('.show_photo', photo_id=photo.id, page=pagination.pages or 1) }}#comment-form">Свежие комментарии</a>
         </small>
         {% if current_user == photo.author %}
             <form class="inline" method="post" action="{{ url_for('.set_comment', photo_id=photo.id) }}">
@@ -83,7 +83,7 @@
                     </h6>
                     <p>
                         {% if comment.replied %}
-                            Ответить 
+                            Ответ 
                             <a href="{{ url_for('user.index', username=comment.replied.author.username) }}">
                                 {{ comment.replied.author.name }}
                             </a>:
