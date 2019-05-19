@@ -9,8 +9,8 @@ from vshaurme.models import User, Role
 class EditProfileAdminForm(EditProfileForm):
     email = StringField('Почта', validators=[DataRequired(), Length(1, 254), Email()])
     role = SelectField('Роль', coerce=int)
-    active = BooleanField('Активен. Active')
-    confirmed = BooleanField('Подтвержден. Confirmed')
+    active = BooleanField('Активен')
+    confirmed = BooleanField('Подтвержден')
     submit = SubmitField("Принять")
 
     def __init__(self, user, *args, **kwargs):
