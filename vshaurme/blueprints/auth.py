@@ -47,7 +47,7 @@ def re_authenticate():
 @login_required
 def logout():
     logout_user()
-    flash('Успеный выход из системы', 'info')
+    flash('Успешный выход из системы', 'info')
     return redirect(url_for('main.index'))
 
 
