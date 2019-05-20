@@ -145,6 +145,10 @@ def crop_avatar():
         y = form.y.data
         w = form.w.data
         h = form.h.data
+        names = avatars.crop_avatar(current_user.avatar_raw, x,y,w,h)
+        current_user.avatar_s = names[0]
+        current_user.avatar_m = names[1]
+        current_user.avatar_l = names[2]
         # TODO: crop avatar
         db.session.commit()
         flash('Аватар обновлен', 'success')
