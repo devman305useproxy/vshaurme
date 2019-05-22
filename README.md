@@ -8,7 +8,7 @@
 
 Сделать это можно тремя путями:
 
-- командой `$ git clone https://github.com/devmanorg/vshaurme`
+- командой `$ git clone https://github.com/devman305useproxy/vshaurme`
 - с помощью [Github Desktop](https://desktop.github.com)
 - скачать zip-архивом с помощью кнопки «Download as Zip»
 
@@ -44,7 +44,7 @@ $ flask run
 ## Как запустить на Repl.it
 
 1. Зарегистрироваться на [Repl.it](https://repl.it)
-2. Создать новый repl, импортировать репозиторий [https://github.com/devmanorg/vshaurme](https://github.com/devmanorg/vshaurme)
+2. Создать новый repl, импортировать репозиторий [https://github.com/devman305useproxy/vshaurme](https://github.com/devman305useproxy/vshaurme)
 
     ![](https://user-images.githubusercontent.com/13587415/57639674-2021db00-75b9-11e9-9ca8-6dafefca9ce2.png)
 
