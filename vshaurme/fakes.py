@@ -20,7 +20,7 @@ def fake_admin():
                  website='http://greyli.com',
                  confirmed=True)
     admin.set_password('helloflask')
-    notification = Notification(message='Hello, welcome to Vshaurme.', receiver=admin)
+    notification = Notification(message='Привет, добро пожаловать в сервис Вшаурме.', receiver=admin)
     db.session.add(notification)
     db.session.add(admin)
     db.session.commit()
