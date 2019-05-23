@@ -1,3 +1,5 @@
+- Эта версия развернута [на pythonanywhere](http://devman305.pythonanywhere.com)
+
 # VShaurme
 
 Каркас для социальной сети «ВШаурме»
