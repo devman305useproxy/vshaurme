@@ -139,8 +139,7 @@ def upload_avatar():
 @user_bp.route('/settings/avatar/crop', methods=['POST'])
 @login_required
 @confirm_required
-def crop_avatar():
-    
+def crop_avatar():    
     def rem_pic(path):
         if os.path.exists(path):
             os.remove(path)
