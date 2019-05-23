@@ -1,7 +1,7 @@
 import os
 import random
 
-from PIL import Image
+from PIL import Image, ImageDraw
 from faker import Faker
 from flask import current_app
 from sqlalchemy.exc import IntegrityError
@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from vshaurme.extensions import db
 from vshaurme.models import User, Photo, Tag, Comment, Notification
 
-fake = Faker()
+fake = Faker("ru_RU")
 
 
 def fake_admin():
@@ -28,13 +28,21 @@ def fake_admin():
 
 def fake_user(count=10):
     for user_number in range(count):
-        user = User(name='Grey Li',
+        #
+        name = fake.name()
+        username = fake.user_name()
+        location = fake.city_name()
+        bio = 'Меня зовут {} и я живу в городе {}.'.format(name, location)
+        website = fake.url()
+        email = fake.email()
+        #
+        user = User(name=name,
                     confirmed=True,
-                    username='greyli{0}'.format(user_number),
-                    bio='My name is Grey Li.',
-                    location='Longon',
-                    website='http://greyli.com',
-                    email='admin{0}@helloflask.com'.format(user_number))
+                    username=username,
+                    bio=bio,
+                    location=location,
+                    website=website,
+                    email=email)
         user.set_password('123456')
         db.session.add(user)
         try:
@@ -52,7 +60,7 @@ def fake_follow(count=30):
 
 def fake_tag(count=20):
     for tag_number in range(count):
-        tag = Tag(name='my_tag{0}'.format(tag_number))
+        tag = Tag(name=fake.word())
         db.session.add(tag)
         try:
             db.session.commit()
@@ -66,7 +74,16 @@ def fake_photo(count=30):
     for photo_number in range(count):
         filename = 'random_%d.jpg' % photo_number
         # TODO: generate image
-
+        
+        color = (
+            random.randint(0,255),
+            random.randint(0,255),
+            random.randint(0,255)
+        )
+        img = Image.new('RGB', (320, 240), color)
+        imgDrawer = ImageDraw.Draw(img)
+        
+        img.save(os.path.join(upload_path,filename))
         photo = Photo(
             description=fake.text(),
             filename=filename,
