@@ -97,7 +97,3 @@ def flash_errors(form):
                 getattr(form, field).label.text,
                 error
             ))
-
-def remove_file(filepath):
-        if os.path.exists(filepath):
-            os.remove(filepath)

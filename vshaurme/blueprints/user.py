@@ -9,7 +9,8 @@ from vshaurme.forms.user import EditProfileForm, UploadAvatarForm, CropAvatarFor
 from vshaurme.models import User, Photo, Collect
 from vshaurme.notifications import push_follow_notification
 from vshaurme.settings import Operations
-from vshaurme.utils import generate_token, validate_token, redirect_back, flash_errors, remove_file
+from vshaurme.utils import generate_token, validate_token, redirect_back, flash_errors
+
 import os
 
 user_bp = Blueprint('user', __name__)
@@ -156,7 +157,8 @@ def crop_avatar():
         # removing old photos of user
         for filename in useless_photos:
             path = os.path.join(current_app.config["AVATARS_SAVE_PATH"], filename)
-            remove_file(path)
+            if os.path.exists(path):
+                os.remove(path)
         # assigning new photos to user
         current_user.avatar_s = names[0]
         current_user.avatar_m = names[1]
