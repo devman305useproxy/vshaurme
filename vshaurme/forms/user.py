@@ -5,6 +5,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional, Regexp
 
 from vshaurme.models import User
+from vshaurme.forms.custom_validators import weak_checker
 
 
 class EditProfileForm(FlaskForm):
@@ -48,10 +49,23 @@ class ChangeEmailForm(FlaskForm):
 
 
 class ChangePasswordForm(FlaskForm):
-    old_password = PasswordField('Старый пароль', validators=[DataRequired()])
-    password = PasswordField('Новый пароль', validators=[
-        DataRequired(), Length(8, 128), EqualTo('password2')])
-    password2 = PasswordField('Повторите новый пароль', validators=[DataRequired()])
+    old_password = PasswordField(
+        'Старый пароль',
+        validators=[DataRequired()]
+    )
+    password = PasswordField(
+        'Новый пароль', 
+        validators=[
+            DataRequired(), 
+            Length(max=128,message="Пароль слишком длиннее 128 символов"), 
+            EqualTo('password2'),
+            weak_checker
+        ]
+    )
+    password2 = PasswordField(
+        'Повторите новый пароль', 
+        validators=[DataRequired()]
+    )
     submit = SubmitField("Изменить")
 
 
