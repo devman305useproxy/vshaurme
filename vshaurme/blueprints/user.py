@@ -9,7 +9,7 @@ from vshaurme.forms.user import EditProfileForm, UploadAvatarForm, CropAvatarFor
 from vshaurme.models import User, Photo, Collect
 from vshaurme.notifications import push_follow_notification
 from vshaurme.settings import Operations
-from vshaurme.utils import generate_token, validate_token, redirect_back, flash_errors
+from vshaurme.utils import generate_token, validate_token, redirect_back, flash_errors, remove_file
 import os
 
 user_bp = Blueprint('user', __name__)
@@ -140,30 +140,27 @@ def upload_avatar():
 @login_required
 @confirm_required
 def crop_avatar():    
-    def rem_pic(path):
-        if os.path.exists(path):
-            os.remove(path)
-
     form = CropAvatarForm()
     if form.validate_on_submit():
+        useless_photos = [
+            current_user.avatar_s, 
+            current_user.avatar_m, 
+            current_user.avatar_l,  
+            current_user.avatar_raw
+        ]
         x = form.x.data
         y = form.y.data
         w = form.w.data
         h = form.h.data
         names = avatars.crop_avatar(current_user.avatar_raw, x,y,w,h)
-        for picname in [
-        current_user.avatar_s, 
-        current_user.avatar_m, 
-        current_user.avatar_l,  
-        current_user.avatar_raw
-        ]:
-            path = os.path.join(current_app.config["AVATARS_SAVE_PATH"], picname)
-            rem_pic(path)
-
+        # removing old photos of user
+        for filename in useless_photos:
+            path = os.path.join(current_app.config["AVATARS_SAVE_PATH"], filename)
+            remove_file(path)
+        # assigning new photos to user
         current_user.avatar_s = names[0]
         current_user.avatar_m = names[1]
         current_user.avatar_l = names[2]
-        # TODO: crop avatar
         db.session.commit()
         flash('Аватар обновлен', 'success')
     flash_errors(form)
