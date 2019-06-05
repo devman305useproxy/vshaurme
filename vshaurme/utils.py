@@ -33,8 +33,6 @@ def validate_token(user, token, operation, new_password=None):
     except (SignatureExpired, BadSignature):
         return False
 
-    print("op = ", data.get('operation'))
-    print("id = ", data.get('id'))
     if operation != data.get('operation') or user.id != data.get('id'):
         return False
 
