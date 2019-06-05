@@ -6,6 +6,7 @@ try:
 except ImportError:
     from urllib.parse import urlparse, urljoin
 
+
 import PIL
 from PIL import Image
 from flask import current_app, request, url_for, redirect, flash
@@ -27,12 +28,13 @@ def generate_token(user, operation, expire_in=None, **kwargs):
 
 def validate_token(user, token, operation, new_password=None):
     s = Serializer(current_app.config['SECRET_KEY'])
-
     try:
-        data = s.loads(token)
+        data = s.loads(bytes(token, encoding="utf-8"))
     except (SignatureExpired, BadSignature):
         return False
 
+    print("op = ", data.get('operation'))
+    print("id = ", data.get('id'))
     if operation != data.get('operation') or user.id != data.get('id'):
         return False
 
