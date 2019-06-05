@@ -1,5 +1,5 @@
 import os
-
+import csv
 import click
 from flask import Flask, render_template
 from flask_login import current_user
@@ -152,3 +152,15 @@ def register_commands(app):
         click.echo('Generating %d comments...' % comment)
         fake_comment(comment)
         click.echo('Done.')
+
+    @app.cli.command("get_csv")
+    def get_csv():
+        basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+        path = os.path.join(basedir, "user.csv")
+        users = User.query.all()
+        with open(path, "w", newline='') as csv_file:
+            writer = csv.writer(csv_file, delimiter=',')
+            writer.writerow(["Real name", "Username", "Email"])
+            for user in users:
+                writer.writerow([user.name, user.username, user.email])
+        print("done!")
