@@ -4,7 +4,7 @@ from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp
 
 from vshaurme.models import User
-from vshaurme.forms.custom_validators import weak_checker
+from vshaurme.forms.custom_validators import weak_pass_checker
 
 
 class LoginForm(FlaskForm):
@@ -24,9 +24,9 @@ class RegisterForm(FlaskForm):
         'Пароль', 
         validators=[
             DataRequired(), 
-            Length(max=128,message="Пароль слишком длиннее 128 символов"), 
+            Length(max=128, message="Пароль слишком длиннее 128 символов"), 
             EqualTo('password2'),
-            weak_checker
+            weak_pass_checker
         ]
     )
     password2 = PasswordField(
@@ -51,7 +51,14 @@ class ForgetPasswordForm(FlaskForm):
 
 class ResetPasswordForm(FlaskForm):
     email = StringField('Почта', validators=[DataRequired(), Length(1, 254), Email()])
-    password = PasswordField('Пароль', validators=[
-        DataRequired(), Length(8, 128), EqualTo('password2')])
+    password = PasswordField(
+        'Пароль', 
+        validators=[
+            DataRequired(),
+            weak_pass_checker, 
+            Length(max=128, message="Пароль слишком длиннее 128 символов"),
+            EqualTo('password2')
+        ]
+    )
     password2 = PasswordField('Повторите пароль', validators=[DataRequired()])
     submit = SubmitField("Далее")
