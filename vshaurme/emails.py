@@ -17,9 +17,6 @@ def send_mail(to, subject, template, **kwargs):
     try:
         sg = SendGridAPIClient(os.getenv('sendgridapi'))
         response = sg.send(message)
-        #print(response.status_code)
-        #print(response.body)
-        #print(response.headers)
     except Exception as e:
         print(e)
 
@@ -30,8 +27,10 @@ def send_confirm_email(user, token, to=None):
 
 
 def send_reset_password_email(user, token):
+    token = token.decode("utf-8")
     send_mail(subject='Сброс пароля/Password Reset', to=user.email, template='emails/reset_password.html', user=user, token=token)
 
 
 def send_change_email_email(user, token, to=None):
+    token = token.decode("utf-8")
     send_mail(subject='Подтверждение смены адреса почты/Смена Change Email Confirm', to=to or user.email, template='emails/change_email.html', user=user, token=token)
