@@ -153,8 +153,8 @@ def register_commands(app):
         fake_comment(comment)
         click.echo('Done.')
 
-    @app.cli.command("get_csv")
-    def get_csv():
+    @app.cli.command("get-users-data")
+    def get_users_data():
         basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
         path = os.path.join(basedir, "user.csv")
         users = User.query.all()
