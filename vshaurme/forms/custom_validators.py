@@ -1,7 +1,7 @@
 from wtforms import ValidationError
 import re
 
-def weak_checker(form, field):
+def weak_pass_checker(form, field):
     lowercase_letters = re.findall(r"[a-z]", field.data)
     uppercase_letters = re.findall(r"[A-Z]", field.data)
     numbers = re.findall(r"\d", field.data)
