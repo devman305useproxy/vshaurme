@@ -5,14 +5,20 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional, Regexp
 
 from vshaurme.models import User
-from vshaurme.forms.custom_validators import weak_pass_checker
+from vshaurme.forms.custom_validators import weak_pass_checker, bad_words_checker
 
 
 class EditProfileForm(FlaskForm):
-    name = StringField('Ваше имя', validators=[DataRequired(), Length(1, 30)])
-    username = StringField('Имя пользователя', validators=[DataRequired(), Length(1, 20),
-                                                   Regexp('^[a-zA-Z0-9]*$',
-                                                          message='Имя пользователя может содержать только символы / The username should contain only: a-z, A-Z and 0-9.')])
+    name = StringField('Ваше имя', validators=[DataRequired(), Length(3, 30), bad_words_checker])
+    username = StringField(
+        'Имя пользователя', 
+        validators=[
+            DataRequired(), 
+            Length(3, 20),
+            Regexp('^[a-zA-Z0-9]*$',message='Имя пользователя может содержать только символы a-z, A-Z и 0-9.'),
+            bad_words_checker
+        ]
+    )
     website = StringField('Вебсайт', validators=[Optional(), Length(0, 255)])
     location = StringField('Город', validators=[Optional(), Length(0, 50)])
     bio = TextAreaField('Пара слов о себе', validators=[Optional(), Length(0, 120)])

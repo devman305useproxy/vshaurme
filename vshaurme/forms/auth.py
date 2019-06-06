@@ -4,7 +4,7 @@ from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp
 
 from vshaurme.models import User
-from vshaurme.forms.custom_validators import weak_pass_checker
+from vshaurme.forms.custom_validators import weak_pass_checker, bad_words_checker
 
 
 class LoginForm(FlaskForm):
@@ -15,11 +15,17 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    name = StringField('Как вас зовут', validators=[DataRequired(), Length(1, 30)])
+    name = StringField('Как вас зовут', validators=[DataRequired(), Length(3, 30), bad_words_checker])
     email = StringField('Адрес почты', validators=[DataRequired(), Length(1, 254), Email()])
-    username = StringField('Имя пользователя', validators=[DataRequired(), Length(1, 20),
-                                                   Regexp('^[a-zA-Z0-9]*$',
-                                                          message='Имя может содержать символы. The username should contain only a-z, A-Z and 0-9.')])
+    username = StringField(
+        'Имя пользователя', 
+        validators=[
+            DataRequired(), 
+            Length(3, 20),
+            Regexp('^[a-zA-Z0-9]*$',message='Имя может содержать символы. a-z, A-Z и 0-9.'),
+            bad_words_checker
+        ]
+    )
     password = PasswordField(
         'Пароль', 
         validators=[
