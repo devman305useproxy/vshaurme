@@ -293,3 +293,9 @@ footer {
     left: 50%;
     bottom: 30px;
 }
+
+.share_buttons{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
