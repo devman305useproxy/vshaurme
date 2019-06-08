@@ -167,11 +167,17 @@ def register_commands(app):
         basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
         if not name:
             name = "users"
-        path = os.path.join(basedir, name + ".csv")
+        filedir = os.path.join(basedir,"csv")
+        filepath = os.path.join(filedir, name + ".csv")
         users = User.query.all()
-        with open(path, "w", newline='') as csv_file:
-            writer = csv.writer(csv_file, delimiter=',')
-            writer.writerow(["Real name", "Username", "Email"])
-            for user in users:
-                writer.writerow([user.name, user.username, user.email])
-        print("done!")
+        if not os.path.exists(filedir):
+            os.mkdir(filedir)
+        try:
+            with open(filepath, "w", newline='') as csv_file:
+                writer = csv.writer(csv_file, delimiter=',')
+                writer.writerow(["Real name", "Username", "Email"])
+                for user in users:
+                    writer.writerow([user.name, user.username, user.email])
+            print("Done! file path is: {}".format(filepath))
+        except OSError as e:
+            print(e)
