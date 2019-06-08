@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.recaptcha import RecaptchaField
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp
@@ -39,6 +40,7 @@ class RegisterForm(FlaskForm):
         'Повторите пароль', 
         validators=[DataRequired()]
     )
+    recaptcha = RecaptchaField()
     submit = SubmitField("Зарегистрироваться")
 
     def validate_email(self, field):
