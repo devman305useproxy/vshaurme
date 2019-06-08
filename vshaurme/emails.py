@@ -10,7 +10,7 @@ import os
 
 def send_mail(to, subject, template, **kwargs):
     message = Mail(
-        from_email='devman305@gmail.com',
+        from_email=os.getenv("email_sender_name"),
         to_emails=to,
         subject=subject,
         html_content=render_template(template, **kwargs))
