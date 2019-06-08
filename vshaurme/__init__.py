@@ -13,6 +13,9 @@ from vshaurme.blueprints.user import user_bp
 from vshaurme.extensions import bootstrap, db, login_manager, mail, dropzone, moment, whooshee, avatars, csrf
 from vshaurme.models import Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission
 from vshaurme.settings import config
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def create_app(config_name=None):
@@ -158,9 +161,13 @@ def register_commands(app):
         click.echo('Done.')
 
     @app.cli.command("get-users-data")
-    def get_users_data():
+    @click.option('--name', prompt='Type csv filename ',
+              help='Name of csv file.')
+    def get_users_data(name):
         basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-        path = os.path.join(basedir, "user.csv")
+        if not name:
+            name = "users"
+        path = os.path.join(basedir, name + ".csv")
         users = User.query.all()
         with open(path, "w", newline='') as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
