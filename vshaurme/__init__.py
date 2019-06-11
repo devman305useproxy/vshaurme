@@ -1,6 +1,7 @@
 import os
 import csv
 import click
+import rollbar
 from flask import Flask, render_template
 from flask_login import current_user
 from flask_wtf.csrf import CSRFError
@@ -23,7 +24,7 @@ def create_app(config_name=None):
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
     app = Flask('vshaurme')
-    
+    rollbar.init(os.getenv("rollbarkey"), 'development')
     app.config.from_object(config[config_name])
     app.config['RECAPTCHA_USE_SSL']= False
     app.config['RECAPTCHA_PUBLIC_KEY']= os.getenv('capchaclient')
