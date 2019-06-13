@@ -18,6 +18,7 @@ class Operations:
 
 
 class BaseConfig:
+    ROLLBAR_KEY="da7c0417e49547cc874dde6367fbd74f"
     VSHAURME_ADMIN_EMAIL = os.getenv('VSHAURME_ADMIN', 'admin@helloflask.com')
     VSHAURME_PHOTO_PER_PAGE = 12
     VSHAURME_COMMENT_PER_PAGE = 15
