@@ -24,12 +24,13 @@ def create_app(config_name=None):
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
     app = Flask('vshaurme')
-    rollbar.init(app.config['ROLLBAR_KEY'], 'development')
+    
     app.config.from_object(config[config_name])
     app.config['RECAPTCHA_USE_SSL']= False
     app.config['RECAPTCHA_PUBLIC_KEY']= os.getenv('capchaclient')
     app.config['RECAPTCHA_PRIVATE_KEY']= os.getenv('capchaserver')
     app.config['RECAPTCHA_OPTIONS']= {'theme':'black'}
+    rollbar.init(app.config['ROLLBAR_KEY'], 'development')
 
     register_extensions(app)
     register_blueprints(app)
